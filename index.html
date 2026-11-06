@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Identity Lab</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="background-orbs"></div>
+
+<header>
+    <a href="#home" class="brand">D!GITAL<span>✦</span></a>
+    <nav>
+        <a href="#test">TEST</a>
+        <a href="#avatar">AVATAR</a>
+        <a href="#profile">MY ID</a>
+        <a href="#games">GAMES</a>
+    </nav>
+    <div class="online"><span></span> ONLINE</div>
+</header>
+
+<main>
+    <section class="hero" id="home">
+        <div class="hero-label">✦ YOUR DIGITAL UNIVERSE ✦</div>
+        <h1>CREATE<br>YOUR <span>IDENTITY.</span></h1>
+        <p>Deine Persönlichkeit. Dein Avatar. Deine digitale Welt.</p>
+        <a href="#test" class="main-button">START YOUR EXPERIENCE ↗</a>
+        <div class="hero-deco deco-one">✳</div>
+        <div class="hero-deco deco-two">♡</div>
+        <div class="hero-deco deco-three">⌘</div>
+        <div class="hero-bottom">EST. 2005 · REIMAGINED 2026</div>
+    </section>
+
+    <section class="section" id="test">
+        <div class="section-tag">01 / PERSONALITY SCANNER</div>
+        <div class="section-title">
+            <h2>WHO ARE <span>YOU?</span></h2>
+            <p>Finde heraus, welcher digitale Typ in dir steckt.</p>
+        </div>
+
+        <div class="test-window">
+            <div class="window-bar">
+                <span>◉ PERSONALITY.EXE</span>
+                <span>— □ ×</span>
+            </div>
+            <div class="test-inner">
+                <div class="progress-info">
+                    <span id="questionNumber">QUESTION 01 / 06</span>
+                    <span id="progressText">0%</span>
+                </div>
+                <div class="progress-track"><div id="progressBar"></div></div>
+                <h3 id="question">Wie verbringst du am liebsten einen freien Tag?</h3>
+                <div id="answers" class="answers"></div>
+                <div id="testResult" class="test-result" hidden></div>
+                <button id="nextQuestion" class="action-button" disabled>WEITER →</button>
+                <button id="restartTest" class="text-button" hidden>Nochmal testen ↻</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="section avatar-section" id="avatar">
+        <div class="section-tag">02 / AVATAR CREATOR</div>
+        <div class="section-title">
+            <h2>DESIGN YOUR <span>AVATAR.</span></h2>
+            <p>Gestalte deine eigene digitale Figur.</p>
+        </div>
+
+        <div class="avatar-layout">
+            <div class="avatar-preview">
+                <div class="preview-label">LIVE PREVIEW · YOUR CHARACTER</div>
+                <div class="avatar-circle">
+                    <div id="avatarFace">😎</div>
+                </div>
+                <div id="avatarNamePreview">YOUR AVATAR</div>
+                <div class="avatar-level">✦ DIGITAL CREATOR ✦</div>
+            </div>
+
+            <div class="avatar-controls">
+                <label for="avatarName">DEIN AVATAR-NAME</label>
+                <input id="avatarName" maxlength="18" placeholder="z. B. PixelQueen">
+
+                <label for="faceSelect">GESICHT</label>
+                <select id="faceSelect">
+                    <option value="😎">Cool 😎</option>
+                    <option value="😊">Happy 😊</option>
+                    <option value="🤩">Starstruck 🤩</option>
+                    <option value="😈">Mischievous 😈</option>
+                    <option value="🥹">Dreamy 🥹</option>
+                    <option value="🤖">Robot 🤖</option>
+                    <option value="👽">Alien 👽</option>
+                    <option value="🐱">Cat 🐱</option>
+                </select>
+
+                <label for="hairSelect">ACCESSOIRE</label>
+                <select id="hairSelect">
+                    <option value="🎀">Pink bow 🎀</option>
+                    <option value="👑">Crown 👑</option>
+                    <option value="🕶️">Sunglasses 🕶️</option>
+                    <option value="🎧">Headphones 🎧</option>
+                    <option value="⭐">Star ⭐</option>
+                    <option value="💿">CD 💿</option>
+                    <option value="🦋">Butterfly 🦋</option>
+                    <option value="✨">Sparkles ✨</option>
+                </select>
+
+                <label>AVATAR-FARBE</label>
+                <div class="color-options">
+                    <button class="color-choice selected" style="--color:#f5a9db" data-color="#f5a9db" aria-label="Pink"></button>
+                    <button class="color-choice" style="--color:#9e9cff" data-color="#9e9cff" aria-label="Lila"></button>
+                    <button class="color-choice" style="--color:#8ce4e9" data-color="#8ce4e9" aria-label="Türkis"></button>
+                    <button class="color-choice" style="--color:#f8d47c" data-color="#f8d47c" aria-label="Gelb"></button>
+                    <button class="color-choice" style="--color:#a7e6a5" data-color="#a7e6a5" aria-label="Grün"></button>
+                </div>
+
+                <button class="action-button" id="saveAvatar">AVATAR SPEICHERN ✓</button>
+                <p class="small-note" id="avatarMessage">Dein Avatar wartet auf sein Design.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section profile-section" id="profile">
+        <div class="section-tag">03 / YOUR DIGITAL IDENTITY</div>
+        <div class="section-title">
+            <h2>MY DIGITAL <span>ID.</span></h2>
+            <p>Deine digitale Identitätskarte.</p>
+        </div>
+
+        <div class="id-card">
+            <div class="id-top">
+                <span>D!GITAL IDENTITY CARD</span>
+                <span>NO. 2026-001</span>
+            </div>
+            <div class="id-main">
+                <div class="id-avatar" id="profileAvatar">😎</div>
+                <div class="id-details">
+                    <div class="id-small">USERNAME</div>
+                    <h3 id="profileName">YOUR NAME</h3>
+                    <div class="id-small">DIGITAL PERSONALITY</div>
+                    <h4 id="profileType">NOT DISCOVERED YET</h4>
+                    <p id="profileDescription">Mache zuerst den Persönlichkeitstest!</p>
+                </div>
+            </div>
+            <div class="id-bottom">
+                <span>✦ DIGITAL CREATOR</span>
+                <span>VERIFIED BY YOURSELF ✓</span>
+            </div>
+        </div>
+        <p class="profile-hint">Deine Karte wird automatisch aktualisiert, wenn du deinen Avatar oder dein Testergebnis änderst.</p>
+    </section>
+
+    <section class="section games-section" id="games">
+        <div class="section-tag">04 / ARCADE ZONE</div>
+        <div class="section-title">
+            <h2>LET'S <span>PLAY.</span></h2>
+            <p>Zwei kleine Spiele. Wie schnell bist du?</p>
+        </div>
+
+        <div class="games-grid">
+            <div class="game-card">
+                <div class="game-icon">⚡</div>
+                <div class="game-label">GAME 001 · REFLEX</div>
+                <h3>NEON REACTION</h3>
+                <p>Warte auf das grüne Licht und klicke so schnell wie möglich!</p>
+                <div id="reactionBox" class="reaction-box">BEREIT?</div>
+                <button class="action-button" id="reactionStart">SPIEL STARTEN</button>
+                <div id="reactionResult" class="game-result">Deine Reaktionszeit: —</div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-icon">🔢</div>
+                <div class="game-label">GAME 002 · LOGIC</div>
+                <h3>NUMBER HACK</h3>
+                <p>Errate die geheime Zahl zwischen 1 und 20.</p>
+                <div class="number-game">
+                    <input id="numberGuess" type="number" min="1" max="20" placeholder="?">
+                    <button id="guessButton" class="action-button">CHECK</button>
+                </div>
+                <div id="numberResult" class="game-result">Dein erster Versuch wartet!</div>
+                <button class="text-button" id="newNumber">Neue Runde ↻</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="final-section">
+        <div class="final-symbol">✧</div>
+        <h2>YOU ARE<br><span>THE ORIGINAL.</span></h2>
+        <p>Es gibt dich nur einmal. Auch digital.</p>
+        <a href="#home" class="main-button">BACK TO TOP ↑</a>
+    </section>
+</main>
+
+<footer>
+    <span>D!GITAL IDENTITY LAB</span>
+    <span>MADE OF PIXELS & PERSONALITY ✦</span>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
