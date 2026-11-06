@@ -1,375 +1,544 @@
+// =====================================
+// THE UNREAL FACTORY – JAVASCRIPT
+// =====================================
 
-/* =================================
-   PERSONALITY TEST
-================================= */
+const $ = (id) => document.getElementById(id);
 
-const questions = [
-    {
-        question: "Wie verbringst du am liebsten einen freien Tag?",
-        answers: [
-            ["🎨 Etwas Kreatives machen", "pixel"],
-            ["🧩 Rätsel lösen und Neues entdecken", "tech"],
-            ["🎉 Mit anderen etwas erleben", "glitch"],
-            ["🌙 Musik hören und träumen", "dream"]
-        ]
-    },
-    {
-        question: "Welche Farbe passt am besten zu dir?",
-        answers: [
-            ["💗 Pink und Rosa", "dream"],
-            ["💙 Blau und Türkis", "tech"],
-            ["💜 Lila und Violett", "pixel"],
-            ["💛 Gelb und Orange", "glitch"]
-        ]
-    },
-    {
-        question: "Du findest eine geheime Tür. Was machst du?",
-        answers: [
-            ["Sofort öffnen! 🔓", "glitch"],
-            ["Erst herausfinden, was dahinter ist 🔍", "tech"],
-            ["Mir vorstellen, was dahinter sein könnte 💭", "dream"],
-            ["Die Tür kreativ gestalten 🎨", "pixel"]
-        ]
-    },
-    {
-        question: "Welche Fähigkeit hättest du gerne?",
-        answers: [
-            ["Die Zukunft erfinden 🚀", "tech"],
-            ["Jede Idee zeichnen können 🖌️", "pixel"],
-            ["In Traumwelten reisen 🌈", "dream"],
-            ["Jeden Moment aufregend machen ⚡", "glitch"]
-        ]
-    },
-    {
-        question: "Welches digitale Gerät würdest du wählen?",
-        answers: [
-            ["Eine futuristische KI 🤖", "tech"],
-            ["Eine Kamera für verrückte Bilder 📸", "pixel"],
-            ["Einen Musikplayer mit magischen Songs 🎧", "dream"],
-            ["Eine Spielkonsole mit Überraschungen 🎮", "glitch"]
-        ]
-    },
-    {
-        question: "Welches Wort beschreibt dich am besten?",
-        answers: [
-            ["Neugierig 🔎", "tech"],
-            ["Fantasievoll 🦋", "dream"],
-            ["Originell ✨", "pixel"],
-            ["Unberechenbar ⚡", "glitch"]
-        ]
-    }
+let candies = [];
+let candyTotal = 0;
+let currentCandy = null;
+let currentOrder = null;
+let orderNumber = 1;
+
+// Zutaten und ihre Emojis
+const flavourEmojis = {
+  "Erdbeer": "🍓",
+  "Zitrone": "🍋",
+  "Waldbeere": "🫐",
+  "Melone": "🍉",
+  "Sternenstaub": "🌟",
+  "Cola-Wolke": "🥤"
+};
+
+const shapeEmojis = {
+  "Stern": "⭐",
+  "Herz": "💖",
+  "Kugel": "🔮",
+  "Regenbogen": "🌈",
+  "Alien": "👽",
+  "Dino": "🦖"
+};
+
+const toppingEmojis = {
+  "Glitzer": "✨",
+  "Sternchen": "⭐",
+  "Knister-Konfetti": "🎉",
+  "Zauberstaub": "🪄",
+  "Mini-Marshmallows": "☁️"
+};
+
+const candyNames = [
+  "Galaxie-Knaller",
+  "Zucker-Wirbel",
+  "Glitzer-Gigant",
+  "Regenbogen-Rakete",
+  "Knister-Komet",
+  "Sternen-Kugel",
+  "Wolken-Wunder",
+  "Dino-Deluxe",
+  "Alien-Konfekt",
+  "Konfetti-Komet",
+  "Zauber-Blitz",
+  "Candy-Chaos"
 ];
 
-const personalityTypes = {
-    pixel: {
-        name: "PIXEL DREAM",
-        emoji: "🎨",
-        description: "Du bist kreativ, ideenreich und liebst es, Dinge auf deine eigene Art zu gestalten. Deine Fantasie kennt fast keine Grenzen."
-    },
-    tech: {
-        name: "TECH GENIUS",
-        emoji: "🤖",
-        description: "Du bist neugierig, clever und willst verstehen, wie Dinge funktionieren. Neue Technologien und spannende Rätsel faszinieren dich."
-    },
-    dream: {
-        name: "CYBER DREAMER",
-        emoji: "🦋",
-        description: "Du hast eine grosse Fantasie und eine verträumte Seite. Du entdeckst gerne neue Welten und hast deinen ganz eigenen Stil."
-    },
-    glitch: {
-        name: "GLITCH ICON",
-        emoji: "⚡",
-        description: "Du bist originell, spontan und voller Überraschungen. Du magst das Aussergewöhnliche und gehst gerne deinen eigenen Weg."
-    }
-};
+const descriptions = [
+  "Diese Erfindung ist so verrückt, dass sogar die Maschinen staunen.",
+  "Ein echtes Meisterwerk aus der geheimen Candy-Forschungsabteilung.",
+  "Niemand weiss genau, wie das funktioniert. Aber es sieht fantastisch aus!",
+  "Die Fabrik hat dieses Ergebnis als absolut aussergewöhnlich eingestuft.",
+  "Ein Experiment, das eigentlich gar nicht funktionieren sollte. Eigentlich."
+];
 
-let currentQuestion = 0;
-let scores = {
-    pixel: 0,
-    tech: 0,
-    dream: 0,
-    glitch: 0
-};
-let selectedAnswer = null;
-
-const questionElement = document.getElementById("question");
-const answersElement = document.getElementById("answers");
-const nextButton = document.getElementById("nextQuestion");
-const resultElement = document.getElementById("testResult");
-const restartButton = document.getElementById("restartTest");
-
-function showQuestion() {
-    const current = questions[currentQuestion];
-
-    questionElement.textContent = current.question;
-    answersElement.innerHTML = "";
-    resultElement.hidden = true;
-    nextButton.hidden = false;
-    restartButton.hidden = true;
-    nextButton.disabled = true;
-    nextButton.textContent = "WEITER →";
-
-    const progress = Math.round(currentQuestion / questions.length * 100);
-    document.getElementById("questionNumber").textContent =
-        `QUESTION ${String(currentQuestion + 1).padStart(2, "0")} / 06`;
-
-    document.getElementById("progressText").textContent = progress + "%";
-    document.getElementById("progressBar").style.width = progress + "%";
-
-    selectedAnswer = null;
-
-    current.answers.forEach(([answer, type]) => {
-        const button = document.createElement("button");
-        button.className = "answer-option";
-        button.textContent = answer;
-
-        button.addEventListener("click", () => {
-            document.querySelectorAll(".answer-option").forEach(option => {
-                option.classList.remove("selected");
-            });
-
-            button.classList.add("selected");
-            selectedAnswer = type;
-            nextButton.disabled = false;
-        });
-
-        answersElement.appendChild(button);
-    });
+function randomItem(array) {
+  return array[Math.floor(Math.random() * array.length)];
 }
 
-nextButton.addEventListener("click", () => {
-    if (!selectedAnswer) return;
+function showToast(message) {
+  const toast = $("toast");
+  toast.textContent = message;
+  toast.classList.add("show");
 
-    scores[selectedAnswer]++;
-    currentQuestion++;
+  clearTimeout(showToast.timer);
+  showToast.timer = setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2600);
+}
 
-    if (currentQuestion < questions.length) {
-        showQuestion();
-    } else {
-        showResult();
-    }
-});
+// =====================================
+// SÜSSIGKEITEN ERFINDEN
+// =====================================
 
-function showResult() {
-    document.getElementById("questionNumber").textContent = "SCAN COMPLETE";
-    document.getElementById("progressText").textContent = "100%";
-    document.getElementById("progressBar").style.width = "100%";
+function createCandy(useRandom = false) {
+  const flavour = useRandom
+    ? randomItem(Object.keys(flavourEmojis))
+    : $("flavour").value;
 
-    questionElement.textContent = "DEIN DIGITALER TYP IST ...";
-    answersElement.innerHTML = "";
-    nextButton.hidden = true;
-    resultElement.hidden = false;
-    restartButton.hidden = false;
+  const shape = useRandom
+    ? randomItem(Object.keys(shapeEmojis))
+    : $("shape").value;
 
-    const winningType = Object.keys(scores).sort((a, b) =>
-        scores[b] - scores[a]
-    )[0];
+  const topping = useRandom
+    ? randomItem(Object.keys(toppingEmojis))
+    : $("topping").value;
 
-    const result = personalityTypes[winningType];
+  const name = randomItem(candyNames);
 
-    resultElement.innerHTML = `
-        <div class="result-emoji">${result.emoji}</div>
-        <h3>${result.name}</h3>
-        <p>${result.description}</p>
-        <p><strong>Dein Typ wurde erfolgreich gescannt! ✦</strong></p>
+  const candy = {
+    flavour,
+    shape,
+    topping,
+    name,
+    emoji: shapeEmojis[shape],
+    description: randomItem(descriptions)
+  };
+
+  currentCandy = candy;
+  candies.push(candy);
+  candyTotal++;
+
+  // Ergebnis anzeigen
+  $("resultEmoji").textContent = candy.emoji;
+  $("resultName").textContent = candy.name;
+  $("resultDescription").textContent =
+    `${candy.description} Geschmack: ${flavour}. Extra: ${topping}.`;
+
+  $("resultTags").innerHTML = `
+    <span>${flavourEmojis[flavour]} ${flavour}</span>
+    <span>${shapeEmojis[shape]} ${shape}</span>
+    <span>${toppingEmojis[topping]} ${topping}</span>
+  `;
+
+  // Maschine animieren
+  $("machineCandy").textContent = candy.emoji;
+  $("machineCaption").textContent = "EXPERIMENT ERFOLGREICH!";
+  $("machineCandy").classList.remove("pop");
+
+  void $("machineCandy").offsetWidth;
+  $("machineCandy").classList.add("pop");
+
+  // Zähler aktualisieren
+  updateCounters();
+  renderCollection();
+  updateRecipes();
+
+  if (useRandom) {
+    showToast("🎲 Überraschung! Ein neues Candy wurde erfunden!");
+  } else {
+    showToast("✨ Deine neue Süssigkeit ist fertig!");
+  }
+}
+
+$("createCandy").addEventListener("click", () => createCandy());
+$("randomCandy").addEventListener("click", () => createCandy(true));
+
+function updateCounters() {
+  $("candyCount").textContent = candyTotal;
+  $("heroMade").textContent = candyTotal;
+}
+
+function renderCollection() {
+  $("collectionText").textContent =
+    candies.length === 1
+      ? "1 Erfindung in deiner Sammlung."
+      : `${candies.length} Erfindungen in deiner Sammlung.`;
+
+  $("collection").innerHTML = "";
+
+  // Die letzten 8 Erfindungen anzeigen
+  candies.slice(-8).reverse().forEach((candy) => {
+    const item = document.createElement("div");
+    item.className = "collection-item";
+
+    item.innerHTML = `
+      <div>${candy.emoji}</div>
+      <strong>${candy.name}</strong>
+      <small>${candy.flavour} · ${candy.shape}</small>
     `;
 
-    document.getElementById("profileType").textContent = result.name;
-    document.getElementById("profileDescription").textContent =
-        result.description;
-
-    resultElement.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest"
-    });
+    $("collection").appendChild(item);
+  });
 }
 
-restartButton.addEventListener("click", () => {
-    currentQuestion = 0;
-    scores = { pixel: 0, tech: 0, dream: 0, glitch: 0 };
-    showQuestion();
-});
+// =====================================
+// FABRIKAUFTRÄGE
+// =====================================
 
-showQuestion();
+const orders = [
+  {
+    title: "Die Sternenstaub-Bestellung",
+    description: "Eine Weltraumforscherin braucht eine Süssigkeit für ihre nächste Mission.",
+    flavour: "Sternenstaub",
+    shape: "Stern",
+    topping: "Glitzer",
+    customer: "👩‍🚀"
+  },
+  {
+    title: "Das Dino-Dessert",
+    description: "Ein Dinosaurier-Museum sucht ein ganz besonderes Eröffnungs-Candy.",
+    flavour: "Erdbeer",
+    shape: "Dino",
+    topping: "Knister-Konfetti",
+    customer: "🦖"
+  },
+  {
+    title: "Die Alien-Lieferung",
+    description: "Besuch aus dem Weltall! Die Gäste wünschen sich etwas Ausserirdisches.",
+    flavour: "Cola-Wolke",
+    shape: "Alien",
+    topping: "Zauberstaub",
+    customer: "👽"
+  },
+  {
+    title: "Der Regenbogen-Auftrag",
+    description: "Eine Regenbogen-Fee braucht eine farbenfrohe Überraschung.",
+    flavour: "Melone",
+    shape: "Regenbogen",
+    topping: "Sternchen",
+    customer: "🧚"
+  },
+  {
+    title: "Die Wolken-Bestellung",
+    description: "Eine Wolkenstadt möchte ein besonders fluffiges Candy.",
+    flavour: "Waldbeere",
+    shape: "Herz",
+    topping: "Mini-Marshmallows",
+    customer: "☁️"
+  },
+  {
+    title: "Die Zitronen-Mission",
+    description: "Ein verrückter Wissenschaftler sucht eine blitzige Erfindung.",
+    flavour: "Zitrone",
+    shape: "Kugel",
+    topping: "Knister-Konfetti",
+    customer: "🧪"
+  }
+];
 
+function loadOrder() {
+  currentOrder = randomItem(orders);
+  orderNumber++;
 
-/* =================================
-   AVATAR CREATOR
-================================= */
+  $("orderNumber").textContent =
+    String(orderNumber).padStart(3, "0");
 
-const faceSelect = document.getElementById("faceSelect");
-const hairSelect = document.getElementById("hairSelect");
-const avatarFace = document.getElementById("avatarFace");
-const avatarCircle = document.querySelector(".avatar-circle");
-const avatarName = document.getElementById("avatarName");
+  $("orderTitle").textContent =
+    currentOrder.customer + " " + currentOrder.title;
 
-let avatarColor = "#f5a9db";
+  $("orderDescription").textContent = currentOrder.description;
 
-function updateAvatar() {
-    avatarFace.textContent =
-        faceSelect.value + " " + hairSelect.value;
+  $("orderRequirements").innerHTML = `
+    <span class="requirement">
+      ${flavourEmojis[currentOrder.flavour]} ${currentOrder.flavour}
+    </span>
+    <span class="requirement">
+      ${shapeEmojis[currentOrder.shape]} ${currentOrder.shape}
+    </span>
+    <span class="requirement">
+      ${toppingEmojis[currentOrder.topping]} ${currentOrder.topping}
+    </span>
+  `;
 
-    avatarCircle.style.background = avatarColor;
-
-    const name = avatarName.value.trim() || "YOUR AVATAR";
-    document.getElementById("avatarNamePreview").textContent = name;
+  $("orderFeedback").textContent =
+    "Stelle zuerst im Labor eine passende Süssigkeit her!";
 }
 
-faceSelect.addEventListener("change", updateAvatar);
-hairSelect.addEventListener("change", updateAvatar);
-avatarName.addEventListener("input", updateAvatar);
-
-document.querySelectorAll(".color-choice").forEach(button => {
-    button.addEventListener("click", () => {
-        document.querySelectorAll(".color-choice").forEach(color => {
-            color.classList.remove("selected");
-        });
-
-        button.classList.add("selected");
-        avatarColor = button.dataset.color;
-        updateAvatar();
-    });
+$("newOrder").addEventListener("click", () => {
+  loadOrder();
+  showToast("📦 Ein neuer Auftrag ist eingetroffen!");
 });
 
-document.getElementById("saveAvatar").addEventListener("click", () => {
-    const name = avatarName.value.trim() || "PIXEL USER";
+$("completeOrder").addEventListener("click", () => {
+  if (!currentCandy) {
+    $("orderFeedback").textContent =
+      "Du musst zuerst eine Süssigkeit herstellen!";
+    return;
+  }
 
-    document.getElementById("profileAvatar").textContent =
-        avatarFace.textContent;
+  const correct =
+    currentCandy.flavour === currentOrder.flavour &&
+    currentCandy.shape === currentOrder.shape &&
+    currentCandy.topping === currentOrder.topping;
 
-    document.getElementById("profileAvatar").style.background = avatarColor;
-    document.getElementById("profileName").textContent = name;
-
-    document.getElementById("avatarMessage").textContent =
-        "✓ Dein Avatar wurde in deiner digitalen ID gespeichert!";
-
-    document.getElementById("profile").scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-    });
+  if (correct) {
+    $("orderFeedback").textContent =
+      "🎉 PERFEKT! Der Kunde ist begeistert. Auftrag erfüllt!";
+    showToast("🏆 Auftrag erfolgreich abgeschlossen!");
+  } else {
+    $("orderFeedback").textContent =
+      "Noch nicht ganz! Vergleiche die drei Zutaten mit deiner letzten Erfindung.";
+  }
 });
 
-updateAvatar();
+loadOrder();
 
+// =====================================
+// REZEPTBUCH
+// =====================================
 
-/* =================================
-   GAME 001: NEON REACTION
-================================= */
+const recipes = [
+  {
+    emoji: "🌟",
+    name: "Sternenstaub-Bonbon",
+    requirement: 1,
+    description: "Das erste Geheimnis"
+  },
+  {
+    emoji: "🦄",
+    name: "Einhorn-Konfekt",
+    requirement: 3,
+    description: "Für Fantasie-Fans"
+  },
+  {
+    emoji: "👾",
+    name: "Glitch-Gummibär",
+    requirement: 5,
+    description: "Ein Fehler? Nein!"
+  },
+  {
+    emoji: "🌈",
+    name: "Regenbogen-Wirbel",
+    requirement: 8,
+    description: "Bunt und verrückt"
+  },
+  {
+    emoji: "👑",
+    name: "Das legendäre Ultra-Candy",
+    requirement: 12,
+    description: "Das Meisterrezept"
+  }
+];
 
-const reactionBox = document.getElementById("reactionBox");
-const reactionStart = document.getElementById("reactionStart");
-const reactionResult = document.getElementById("reactionResult");
+function updateRecipes() {
+  const unlocked = recipes.filter(
+    recipe => candyTotal >= recipe.requirement
+  ).length;
 
+  $("recipeProgress").textContent = `${unlocked} / ${recipes.length}`;
+  $("heroRecipes").textContent = unlocked;
+
+  $("progressFill").style.width =
+    `${(unlocked / recipes.length) * 100}%`;
+
+  $("recipesGrid").innerHTML = "";
+
+  recipes.forEach((recipe) => {
+    const isUnlocked = candyTotal >= recipe.requirement;
+
+    const card = document.createElement("div");
+    card.className = `recipe-card ${isUnlocked ? "" : "locked"}`;
+
+    card.innerHTML = isUnlocked
+      ? `
+        <div class="recipe-emoji">${recipe.emoji}</div>
+        <strong>${recipe.name}</strong>
+        <small>✓ FREIGESCHALTET</small>
+      `
+      : `
+        <div class="recipe-emoji">🔒</div>
+        <strong>Geheimes Rezept</strong>
+        <small>Ab ${recipe.requirement} Erfindungen</small>
+      `;
+
+    $("recipesGrid").appendChild(card);
+  });
+
+  if (unlocked === 5) {
+    $("recipeHint").textContent =
+      "👑 FABRIK-LEGENDE! Du hast alle fünf geheimen Rezepte entdeckt!";
+  } else {
+    $("recipeHint").textContent =
+      `💡 Noch ${recipes[unlocked].requirement - candyTotal} Erfindung(en) bis zum nächsten Geheimrezept!`;
+  }
+}
+
+updateRecipes();
+
+// =====================================
+// GAME 1: REAKTIONSTEST
+// =====================================
+
+let reactionTimeout;
+let reactionStartTime = 0;
 let reactionState = "idle";
-let reactionTimer;
-let startTime;
 
-reactionStart.addEventListener("click", () => {
-    clearTimeout(reactionTimer);
-    reactionState = "waiting";
+$("reactionStart").addEventListener("click", startReaction);
 
-    reactionBox.className = "reaction-box waiting";
-    reactionBox.textContent = "WARTEN ...";
-    reactionResult.textContent = "Warte auf GRÜN!";
+function startReaction() {
+  clearTimeout(reactionTimeout);
 
-    reactionStart.disabled = true;
+  reactionState = "waiting";
 
-    const delay = 1500 + Math.random() * 3500;
+  $("reactionBox").className = "reaction-box waiting";
+  $("reactionBox").textContent = "WARTE AUF GRÜN ...";
+  $("reactionFeedback").textContent = "Nicht zu früh klicken!";
+  $("reactionStart").textContent = "LÄUFT ...";
 
-    reactionTimer = setTimeout(() => {
-        reactionState = "go";
-        reactionBox.className = "reaction-box go";
-        reactionBox.textContent = "JETZT KLICKEN!";
-        startTime = performance.now();
-    }, delay);
-});
+  const waitTime = 1500 + Math.random() * 3500;
 
-reactionBox.addEventListener("click", () => {
-    if (reactionState === "waiting") {
-        clearTimeout(reactionTimer);
-        reactionState = "idle";
-        reactionBox.className = "reaction-box too-soon";
-        reactionBox.textContent = "ZU FRÜH!";
-        reactionResult.textContent = "Ups! Starte eine neue Runde.";
-        reactionStart.disabled = false;
-    } else if (reactionState === "go") {
-        const reactionTime = Math.round(performance.now() - startTime);
+  reactionTimeout = setTimeout(() => {
+    reactionState = "ready";
+    reactionStartTime = performance.now();
 
-        reactionState = "idle";
-        reactionBox.className = "reaction-box";
-        reactionBox.textContent = "GUT GEMACHT!";
-        reactionResult.textContent =
-            `Deine Reaktionszeit: ${reactionTime} Millisekunden!`;
-
-        reactionStart.disabled = false;
-    }
-});
-
-
-/* =================================
-   GAME 002: NUMBER HACK
-================================= */
-
-let secretNumber = Math.floor(Math.random() * 20) + 1;
-let attempts = 0;
-
-function resetNumberGame() {
-    secretNumber = Math.floor(Math.random() * 20) + 1;
-    attempts = 0;
-
-    document.getElementById("numberGuess").value = "";
-    document.getElementById("numberResult").textContent =
-        "Neue Zahl wurde erstellt. Viel Glück!";
+    $("reactionBox").className = "reaction-box ready";
+    $("reactionBox").textContent = "JETZT KLICKEN!";
+  }, waitTime);
 }
 
-function checkNumber() {
-    const input = document.getElementById("numberGuess");
-    const guess = Number(input.value);
-    const result = document.getElementById("numberResult");
+$("reactionBox").addEventListener("click", () => {
+  if (reactionState === "waiting") {
+    clearTimeout(reactionTimeout);
+    reactionState = "idle";
 
-    if (input.value === "" || !Number.isInteger(guess) || guess < 1 || guess > 20) {
-        result.textContent = "Bitte gib eine ganze Zahl zwischen 1 und 20 ein.";
-        return;
+    $("reactionBox").className = "reaction-box too-soon";
+    $("reactionBox").textContent = "ZU FRÜH!";
+    $("reactionFeedback").textContent =
+      "Ups! Warte, bis das Feld grün wird.";
+    $("reactionStart").textContent = "NOCHMAL";
+    return;
+  }
+
+  if (reactionState === "ready") {
+    const time = Math.round(performance.now() - reactionStartTime);
+    reactionState = "idle";
+
+    $("reactionBox").className = "reaction-box";
+    $("reactionBox").textContent = `${time} ms`;
+
+    let message = "Nicht schlecht!";
+
+    if (time < 200) {
+      message = "⚡ UNGLAUBLICH! Blitzschnell!";
+    } else if (time < 300) {
+      message = "🔥 Wow! Sehr schnell!";
+    } else if (time < 450) {
+      message = "👏 Gute Reaktion!";
     }
 
-    attempts++;
-
-    if (guess === secretNumber) {
-        result.textContent =
-            `RICHTIG! 🎉 Du hast es in ${attempts} Versuchen geschafft!`;
-    } else if (guess < secretNumber) {
-        result.textContent = "Die gesuchte Zahl ist GRÖSSER! ↑";
-    } else {
-        result.textContent = "Die gesuchte Zahl ist KLEINER! ↓";
-    }
-}
-
-document.getElementById("guessButton").addEventListener("click", checkNumber);
-
-document.getElementById("numberGuess").addEventListener("keydown", event => {
-    if (event.key === "Enter") checkNumber();
+    $("reactionFeedback").textContent = message;
+    $("reactionStart").textContent = "NOCHMAL SPIELEN";
+  }
 });
 
-document.getElementById("newNumber").addEventListener("click", resetNumberGame);
+// =====================================
+// GAME 2: ZAHLEN-MYSTERY
+// =====================================
 
+let secretNumber;
+let guessesLeft;
 
-/* =================================
-   EXTRA: KLEINER DIGITALER EFFEKT
-================================= */
+function resetGuessGame() {
+  secretNumber = Math.floor(Math.random() * 20) + 1;
+  guessesLeft = 5;
 
-document.addEventListener("click", event => {
-    if (event.target.closest("button, a, input, select")) return;
+  $("guessInput").value = "";
+  $("guessFeedback").textContent = "Du hast 5 Versuche.";
+}
 
-    const sparkle = document.createElement("div");
-    sparkle.textContent = ["✦", "✧", "♡", "＋", "★"][
-        Math.floor(Math.random() * 5)
-    ];
+function makeGuess() {
+  const guess = Number($("guessInput").value);
 
-    sparkle.className = "click-sparkle";
-    sparkle.style.left = event.clientX + "px";
-    sparkle.style.top = event.clientY + "px";
+  if (!Number.isInteger(guess) || guess < 1 || guess > 20) {
+    $("guessFeedback").textContent =
+      "Bitte gib eine ganze Zahl zwischen 1 und 20 ein.";
+    return;
+  }
 
-    document.body.appendChild(sparkle);
+  guessesLeft--;
 
-    setTimeout(() => sparkle.remove(), 850);
+  if (guess === secretNumber) {
+    $("guessFeedback").textContent =
+      `🎉 RICHTIG! Die Zahl war ${secretNumber}. Du hast gewonnen!`;
+    return;
+  }
+
+  if (guessesLeft === 0) {
+    $("guessFeedback").textContent =
+      `Game over! Die gesuchte Zahl war ${secretNumber}.`;
+    return;
+  }
+
+  if (guess < secretNumber) {
+    $("guessFeedback").textContent =
+      `📈 Zu klein! Noch ${guessesLeft} Versuch(e).`;
+  } else {
+    $("guessFeedback").textContent =
+      `📉 Zu gross! Noch ${guessesLeft} Versuch(e).`;
+  }
+
+  $("guessInput").value = "";
+  $("guessInput").focus();
+}
+
+$("guessButton").addEventListener("click", makeGuess);
+$("guessReset").addEventListener("click", resetGuessGame);
+
+$("guessInput").addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    makeGuess();
+  }
+});
+
+resetGuessGame();
+
+// =====================================
+// KLEINES GEHEIMES EASTER EGG
+// =====================================
+
+let logoClicks = 0;
+
+document.querySelector(".logo").addEventListener("click", (event) => {
+  logoClicks++;
+
+  if (logoClicks === 5) {
+    event.preventDefault();
+    showToast("👀 Du hast das geheime Fabrik-Logo entdeckt!");
+    document.body.classList.add("secret-mode");
+
+    setTimeout(() => {
+      document.body.classList.remove("secret-mode");
+    }, 3000);
+
+    logoClicks = 0;
+  }
+});
+
+// Zufällige Mini-Überraschung bei Klicks auf freie Bereiche
+const surprises = [
+  "🍬 Candy-Alarm!",
+  "✨ Eine Prise Glitzer für dich!",
+  "🍭 Die Fabrik dreht durch!",
+  "🧁 Geheime Zuckerkraft entdeckt!",
+  "🌈 Heute ist ein guter Tag für Fantasie!",
+  "👾 Ein Candy-Alien wurde gesichtet!"
+];
+
+let lastSurprise = 0;
+
+document.addEventListener("click", (event) => {
+  const clickedInteractive = event.target.closest(
+    "button, a, select, input, .reaction-box"
+  );
+
+  if (clickedInteractive) return;
+
+  const now = Date.now();
+
+  if (now - lastSurprise < 4500) return;
+
+  lastSurprise = now;
+
+  if (Math.random() < 0.4) {
+    showToast(randomItem(surprises));
+  }
 });

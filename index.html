@@ -1,202 +1,226 @@
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Identity Lab</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Unreal Factory 🍬</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<div class="background-orbs"></div>
-
-<header>
-    <a href="#home" class="brand">D!GITAL<span>✦</span></a>
+  <header class="topbar">
+    <a class="logo" href="#home">🍭 UNREAL<span>FACTORY</span></a>
     <nav>
-        <a href="#test">TEST</a>
-        <a href="#avatar">AVATAR</a>
-        <a href="#profile">MY ID</a>
-        <a href="#games">GAMES</a>
+      <a href="#lab">Süssigkeiten-Labor</a>
+      <a href="#orders">Aufträge</a>
+      <a href="#games">Minispiele</a>
+      <a href="#recipes">Rezeptbuch</a>
     </nav>
-    <div class="online"><span></span> ONLINE</div>
-</header>
+    <div class="counter">🍬 <span id="candyCount">0</span></div>
+  </header>
 
-<main>
+  <main>
     <section class="hero" id="home">
-        <div class="hero-label">✦ YOUR DIGITAL UNIVERSE ✦</div>
-        <h1>CREATE<br>YOUR <span>IDENTITY.</span></h1>
-        <p>Deine Persönlichkeit. Dein Avatar. Deine digitale Welt.</p>
-        <a href="#test" class="main-button">START YOUR EXPERIENCE ↗</a>
-        <div class="hero-deco deco-one">✳</div>
-        <div class="hero-deco deco-two">♡</div>
-        <div class="hero-deco deco-three">⌘</div>
-        <div class="hero-bottom">EST. 2005 · REIMAGINED 2026</div>
+      <div class="hero-copy">
+        <div class="eyebrow">DIE VERRÜCKTESTE FABRIK DER WELT</div>
+        <h1>MAKE IT<br><span>UNREAL.</span></h1>
+        <p>Hier gelten keine normalen Süssigkeiten-Regeln. Erfinde verrückte Sorten, mische geheime Zutaten und werde zur legendärsten Süssigkeiten-Erfinderin!</p>
+        <a class="main-button" href="#lab">FABRIK BETRETEN <span>→</span></a>
+        <div class="hero-stats">
+          <div><strong id="heroMade">0</strong><small>ERFUNDEN</small></div>
+          <div><strong id="heroRecipes">0</strong><small>REZEPTE</small></div>
+          <div><strong>∞</strong><small>MÖGLICHKEITEN</small></div>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <div class="hero-candy">🍬</div>
+        <div class="floaty float-a">🍭</div>
+        <div class="floaty float-b">🍓</div>
+        <div class="floaty float-c">✨</div>
+        <div class="floaty float-d">🍋</div>
+        <div class="hero-sticker">100%<br>UNREAL!</div>
+      </div>
+      <div class="hero-bottom">SCROLLEN, EXPERIMENTIEREN, NASCHEN (NUR VIRTUELL!) ↓</div>
     </section>
 
-    <section class="section" id="test">
-        <div class="section-tag">01 / PERSONALITY SCANNER</div>
-        <div class="section-title">
-            <h2>WHO ARE <span>YOU?</span></h2>
-            <p>Finde heraus, welcher digitale Typ in dir steckt.</p>
+    <section class="section lab-section" id="lab">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">01 / DAS EXPERIMENTIER-LABOR</div>
+          <h2>ERFINDE DEIN<br><span>EIGENES CANDY.</span></h2>
+        </div>
+        <p>Du bist die Chefin des Labors. Kombiniere Zutaten und erschaffe etwas, das es noch nie gegeben hat.</p>
+      </div>
+
+      <div class="lab-layout">
+        <div class="machine">
+          <div class="machine-top">
+            <span>✳ CANDY CREATOR 3000</span>
+            <span class="live-dot">● ONLINE</span>
+          </div>
+          <div class="machine-window">
+            <div class="machine-light"></div>
+            <div class="machine-candy" id="machineCandy">🍬</div>
+            <div class="machine-caption" id="machineCaption">BEREIT FÜR DEINE IDEE</div>
+          </div>
+          <div class="machine-controls">
+            <div class="control-row">
+              <label for="flavour">GESCHMACK</label>
+              <select id="flavour">
+                <option value="Erdbeer">🍓 Erdbeer</option>
+                <option value="Zitrone">🍋 Zitrone</option>
+                <option value="Waldbeere">🫐 Waldbeere</option>
+                <option value="Melone">🍉 Melone</option>
+                <option value="Sternenstaub">🌟 Sternenstaub</option>
+                <option value="Cola-Wolke">🥤 Cola-Wolke</option>
+              </select>
+            </div>
+            <div class="control-row">
+              <label for="shape">FORM</label>
+              <select id="shape">
+                <option value="Stern">⭐ Stern</option>
+                <option value="Herz">💖 Herz</option>
+                <option value="Kugel">🔮 Kugel</option>
+                <option value="Regenbogen">🌈 Regenbogen</option>
+                <option value="Alien">👽 Alien</option>
+                <option value="Dino">🦖 Dino</option>
+              </select>
+            </div>
+            <div class="control-row">
+              <label for="topping">EXTRA</label>
+              <select id="topping">
+                <option value="Glitzer">✨ Glitzer</option>
+                <option value="Sternchen">⭐ Sternchen</option>
+                <option value="Knister-Konfetti">🎉 Knister-Konfetti</option>
+                <option value="Zauberstaub">🪄 Zauberstaub</option>
+                <option value="Mini-Marshmallows">☁️ Mini-Marshmallows</option>
+              </select>
+            </div>
+            <button class="create-button" id="createCandy">✨ SÜSSIGKEIT ERFINDEN</button>
+          </div>
         </div>
 
-        <div class="test-window">
-            <div class="window-bar">
-                <span>◉ PERSONALITY.EXE</span>
-                <span>— □ ×</span>
+        <div class="creation-side">
+          <div class="result-card" id="resultCard">
+            <div class="result-label">DEINE NEUE ERFINDUNG</div>
+            <div class="result-emoji" id="resultEmoji">❔</div>
+            <h3 id="resultName">Noch nichts erfunden!</h3>
+            <p id="resultDescription">Wähle links deine Zutaten und starte den Candy Creator.</p>
+            <div class="result-tags" id="resultTags">
+              <span>WARTET AUF DICH</span>
             </div>
-            <div class="test-inner">
-                <div class="progress-info">
-                    <span id="questionNumber">QUESTION 01 / 06</span>
-                    <span id="progressText">0%</span>
-                </div>
-                <div class="progress-track"><div id="progressBar"></div></div>
-                <h3 id="question">Wie verbringst du am liebsten einen freien Tag?</h3>
-                <div id="answers" class="answers"></div>
-                <div id="testResult" class="test-result" hidden></div>
-                <button id="nextQuestion" class="action-button" disabled>WEITER →</button>
-                <button id="restartTest" class="text-button" hidden>Nochmal testen ↻</button>
+          </div>
+          <div class="random-card">
+            <div class="random-icon">🎲</div>
+            <div>
+              <h3>Überraschungsmaschine</h3>
+              <p>Keine Ahnung, was du willst? Lass die Maschine entscheiden!</p>
+              <button class="small-button" id="randomCandy">ZUFALLS-CANDY ERSTELLEN ↗</button>
             </div>
+          </div>
         </div>
+      </div>
+      <div class="collection-bar">
+        <span>DEINE ERFINDUNGEN</span>
+        <span id="collectionText">Noch keine Candys in deiner Sammlung.</span>
+      </div>
+      <div class="collection" id="collection"></div>
     </section>
 
-    <section class="section avatar-section" id="avatar">
-        <div class="section-tag">02 / AVATAR CREATOR</div>
-        <div class="section-title">
-            <h2>DESIGN YOUR <span>AVATAR.</span></h2>
-            <p>Gestalte deine eigene digitale Figur.</p>
+    <section class="order-section" id="orders">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">02 / DIE FABRIK BRAUCHT DICH</div>
+          <h2>ZEIT FÜR EINEN<br><span>AUFTRAG!</span></h2>
         </div>
+        <p>Die Fabrik hat eine Bestellung erhalten. Kannst du die richtige Süssigkeit herstellen?</p>
+      </div>
 
-        <div class="avatar-layout">
-            <div class="avatar-preview">
-                <div class="preview-label">LIVE PREVIEW · YOUR CHARACTER</div>
-                <div class="avatar-circle">
-                    <div id="avatarFace">😎</div>
-                </div>
-                <div id="avatarNamePreview">YOUR AVATAR</div>
-                <div class="avatar-level">✦ DIGITAL CREATOR ✦</div>
-            </div>
-
-            <div class="avatar-controls">
-                <label for="avatarName">DEIN AVATAR-NAME</label>
-                <input id="avatarName" maxlength="18" placeholder="z. B. PixelQueen">
-
-                <label for="faceSelect">GESICHT</label>
-                <select id="faceSelect">
-                    <option value="😎">Cool 😎</option>
-                    <option value="😊">Happy 😊</option>
-                    <option value="🤩">Starstruck 🤩</option>
-                    <option value="😈">Mischievous 😈</option>
-                    <option value="🥹">Dreamy 🥹</option>
-                    <option value="🤖">Robot 🤖</option>
-                    <option value="👽">Alien 👽</option>
-                    <option value="🐱">Cat 🐱</option>
-                </select>
-
-                <label for="hairSelect">ACCESSOIRE</label>
-                <select id="hairSelect">
-                    <option value="🎀">Pink bow 🎀</option>
-                    <option value="👑">Crown 👑</option>
-                    <option value="🕶️">Sunglasses 🕶️</option>
-                    <option value="🎧">Headphones 🎧</option>
-                    <option value="⭐">Star ⭐</option>
-                    <option value="💿">CD 💿</option>
-                    <option value="🦋">Butterfly 🦋</option>
-                    <option value="✨">Sparkles ✨</option>
-                </select>
-
-                <label>AVATAR-FARBE</label>
-                <div class="color-options">
-                    <button class="color-choice selected" style="--color:#f5a9db" data-color="#f5a9db" aria-label="Pink"></button>
-                    <button class="color-choice" style="--color:#9e9cff" data-color="#9e9cff" aria-label="Lila"></button>
-                    <button class="color-choice" style="--color:#8ce4e9" data-color="#8ce4e9" aria-label="Türkis"></button>
-                    <button class="color-choice" style="--color:#f8d47c" data-color="#f8d47c" aria-label="Gelb"></button>
-                    <button class="color-choice" style="--color:#a7e6a5" data-color="#a7e6a5" aria-label="Grün"></button>
-                </div>
-
-                <button class="action-button" id="saveAvatar">AVATAR SPEICHERN ✓</button>
-                <p class="small-note" id="avatarMessage">Dein Avatar wartet auf sein Design.</p>
-            </div>
+      <div class="order-card">
+        <div class="order-illustration">📦<div>NEW<br>ORDER!</div></div>
+        <div class="order-info">
+          <div class="eyebrow">KUNDENBESTELLUNG #<span id="orderNumber">001</span></div>
+          <h3 id="orderTitle">Die Sternenstaub-Bestellung</h3>
+          <p id="orderDescription">Eine Kundin wünscht sich ein ganz besonderes Candy.</p>
+          <div class="order-requirements" id="orderRequirements"></div>
+          <div class="order-actions">
+            <button class="main-button" id="completeOrder">AUFTRAG ERFÜLLEN ✓</button>
+            <button class="text-button" id="newOrder">Anderen Auftrag laden ↻</button>
+          </div>
+          <p class="order-feedback" id="orderFeedback">Stelle zuerst im Labor eine passende Süssigkeit her!</p>
         </div>
+      </div>
     </section>
 
-    <section class="section profile-section" id="profile">
-        <div class="section-tag">03 / YOUR DIGITAL IDENTITY</div>
-        <div class="section-title">
-            <h2>MY DIGITAL <span>ID.</span></h2>
-            <p>Deine digitale Identitätskarte.</p>
+    <section class="games-section" id="games">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">03 / PAUSENRAUM</div>
+          <h2>PLAY TIME<span>!</span></h2>
         </div>
+        <p>Auch die besten Erfinder brauchen mal eine Pause. Willkommen im Spielebereich!</p>
+      </div>
 
-        <div class="id-card">
-            <div class="id-top">
-                <span>D!GITAL IDENTITY CARD</span>
-                <span>NO. 2026-001</span>
-            </div>
-            <div class="id-main">
-                <div class="id-avatar" id="profileAvatar">😎</div>
-                <div class="id-details">
-                    <div class="id-small">USERNAME</div>
-                    <h3 id="profileName">YOUR NAME</h3>
-                    <div class="id-small">DIGITAL PERSONALITY</div>
-                    <h4 id="profileType">NOT DISCOVERED YET</h4>
-                    <p id="profileDescription">Mache zuerst den Persönlichkeitstest!</p>
-                </div>
-            </div>
-            <div class="id-bottom">
-                <span>✦ DIGITAL CREATOR</span>
-                <span>VERIFIED BY YOURSELF ✓</span>
-            </div>
-        </div>
-        <p class="profile-hint">Deine Karte wird automatisch aktualisiert, wenn du deinen Avatar oder dein Testergebnis änderst.</p>
+      <div class="games-grid">
+        <article class="game-card reaction-game">
+          <div class="game-number">GAME 01</div>
+          <div class="game-emoji">⚡</div>
+          <h3>REAKTIONS-TEST</h3>
+          <p>Warte, bis das Feld grün wird. Dann musst du blitzschnell klicken!</p>
+          <div class="reaction-box" id="reactionBox">KLICK AUF START!</div>
+          <button class="game-button" id="reactionStart">STARTEN</button>
+          <p class="game-feedback" id="reactionFeedback">Wie schnell bist du?</p>
+        </article>
+
+        <article class="game-card guess-game">
+          <div class="game-number">GAME 02</div>
+          <div class="game-emoji">🔢</div>
+          <h3>ZAHLEN-MYSTERY</h3>
+          <p>Ich denke an eine Zahl zwischen 1 und 20. Errätst du sie?</p>
+          <div class="guess-controls">
+            <input type="number" id="guessInput" min="1" max="20" placeholder="Dein Tipp">
+            <button class="game-button" id="guessButton">RATEN</button>
+          </div>
+          <p class="game-feedback" id="guessFeedback">Du hast 5 Versuche.</p>
+          <button class="reset-button" id="guessReset">NEU STARTEN ↻</button>
+        </article>
+      </div>
     </section>
 
-    <section class="section games-section" id="games">
-        <div class="section-tag">04 / ARCADE ZONE</div>
-        <div class="section-title">
-            <h2>LET'S <span>PLAY.</span></h2>
-            <p>Zwei kleine Spiele. Wie schnell bist du?</p>
+    <section class="recipe-section" id="recipes">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">04 / GEHEIME FABRIK-ARCHIVE</div>
+          <h2>DAS REZEPT<span>BUCH.</span></h2>
         </div>
-
-        <div class="games-grid">
-            <div class="game-card">
-                <div class="game-icon">⚡</div>
-                <div class="game-label">GAME 001 · REFLEX</div>
-                <h3>NEON REACTION</h3>
-                <p>Warte auf das grüne Licht und klicke so schnell wie möglich!</p>
-                <div id="reactionBox" class="reaction-box">BEREIT?</div>
-                <button class="action-button" id="reactionStart">SPIEL STARTEN</button>
-                <div id="reactionResult" class="game-result">Deine Reaktionszeit: —</div>
-            </div>
-
-            <div class="game-card">
-                <div class="game-icon">🔢</div>
-                <div class="game-label">GAME 002 · LOGIC</div>
-                <h3>NUMBER HACK</h3>
-                <p>Errate die geheime Zahl zwischen 1 und 20.</p>
-                <div class="number-game">
-                    <input id="numberGuess" type="number" min="1" max="20" placeholder="?">
-                    <button id="guessButton" class="action-button">CHECK</button>
-                </div>
-                <div id="numberResult" class="game-result">Dein erster Versuch wartet!</div>
-                <button class="text-button" id="newNumber">Neue Runde ↻</button>
-            </div>
-        </div>
+        <p>Manche Rezepte sind so geheim, dass sie erst nach deinen Experimenten auftauchen.</p>
+      </div>
+      <div class="recipe-progress">
+        <div><span>FREIGESCHALTETE REZEPTE</span><strong id="recipeProgress">0 / 5</strong></div>
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      </div>
+      <div class="recipes-grid" id="recipesGrid"></div>
+      <p class="recipe-hint" id="recipeHint">💡 Tipp: Erfinde mehr Süssigkeiten, um geheime Rezepte zu entdecken.</p>
     </section>
 
-    <section class="final-section">
-        <div class="final-symbol">✧</div>
-        <h2>YOU ARE<br><span>THE ORIGINAL.</span></h2>
-        <p>Es gibt dich nur einmal. Auch digital.</p>
-        <a href="#home" class="main-button">BACK TO TOP ↑</a>
+    <section class="final-banner">
+      <div class="final-sparkle">✦ ✧ ✦</div>
+      <p>DU HAST DIE REGELN GEBROCHEN.</p>
+      <h2>GOOD CANDY.<br><span>BAD IDEAS.</span></h2>
+      <a href="#lab" class="main-button">ZURÜCK INS LABOR ↑</a>
     </section>
-</main>
+  </main>
 
-<footer>
-    <span>D!GITAL IDENTITY LAB</span>
-    <span>MADE OF PIXELS & PERSONALITY ✦</span>
-</footer>
+  <footer>
+    <span>🍬 THE UNREAL FACTORY</span>
+    <span>ERFUNDEN MIT EINER PRISE FANTASIE ✨</span>
+  </footer>
 
-<script src="script.js"></script>
+  <div class="toast" id="toast"></div>
+  <script src="script.js"></script>
 </body>
 </html>
