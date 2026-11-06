@@ -762,3 +762,23 @@ footer {
         font-size: 14px;
     }
 }
+
+
+
+
+
+.click-sparkle {
+    position: fixed;
+    z-index: 100;
+    pointer-events: none;
+    color: #d56fc3;
+    font-size: 25px;
+    animation: sparkleUp .8s ease forwards;
+}
+
+@keyframes sparkleUp {
+    to {
+        transform: translateY(-45px) rotate(90deg) scale(1.8);
+        opacity: 0;
+    }
+}
